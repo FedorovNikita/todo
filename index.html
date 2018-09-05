@@ -3,16 +3,39 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
 	<section class="task-wrap mt-5">
 		<div class="container">
-			<h3 class="text-center">Task list</h3>
-			<ul class="list-group">
-				<!-- <li class="list-group-item">Cras justo odio</li> -->
-				
-			</ul>
+			<div class="card mb-3">
+				<div class="card-header">
+					Add todo
+				</div>
+				<div class="card-body">
+					<form>
+						<div class="form-group">
+							<label for="todoText">Text</label>
+							<input type="text" class="form-control" id="todoText">
+						</div>
+						<button type="submit" class="btn btn-primary">Add</button>
+					</form>
+				</div>
+			</div>
+			<div class="card mb-3">
+				<div class="card-header">
+					Task list
+				</div>
+				<div class="card-body">
+					<ul class="list-group">
+						<!-- <li class="list-group-item">Cras justo odio</li> -->
+							
+					</ul>
+				</div>
+					
+			</div>
+			<button class="btn btn-primary clear-btn">Clear list</button>
 		</div>
 	</section>
 	<script src="todo.js"></script>
