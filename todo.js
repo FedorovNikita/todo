@@ -86,11 +86,24 @@ ul.addEventListener('click', function(e) {
 form.addEventListener('submit', function(e) {
 	//прекращение стандартного действия (то что тут было сразу пропадало)
 	e.preventDefault();
-	//получать текст из инпута inputText.value
-	//и чтобы добавить можно просто вызывать функцию и передавать ей это текст
-	//addList(inputText.value); // но этот у нас генерирует все элементы заного
-	addList(inputText.value);
-})
+	if ( !inputText.value ) {
+		// чтобы не добавлялись пустые элементы в наш список
+		// is-invalid это класс из бутстрапаы
+		inputText.classList.add('is-invalid');
+	} else {
+		// удаляем класс, чтобы его точно не было
+		inputText.classList.remove('is-invalid');
+		//получать текст из инпута inputText.value
+		//и чтобы добавить можно просто вызывать функцию и передавать ей это текст
+		//addList(inputText.value); // но этот у нас генерирует все элементы заного
+		addList(inputText.value);
+		// теперь, если мы добавляем пустой элемент, будет "предупреждение", и когда мы добавляем новый элемент, после так и остается в красном фоне
+		// поэтому нам нужно обнулить состояние формы
+		form.reset();
+
+	}
+	
+});
 
 generateList(tasks);
 

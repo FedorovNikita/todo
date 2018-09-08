@@ -18,6 +18,10 @@
 						<div class="form-group">
 							<label for="todoText">Text</label>
 							<input type="text" class="form-control" id="todoText">
+							<!-- элемент ниже появится только если у инпута выше появится класс is-invalid -->
+							<div class="invalid-feedback">
+								Please enter some text
+							</div>
 						</div>
 						<button type="submit" class="btn btn-primary">Add</button>
 					</form>
