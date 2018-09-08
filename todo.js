@@ -105,6 +105,14 @@ form.addEventListener('submit', function(e) {
 	
 });
 
+// keyup когда мы начинаем вводить в инпут
+// когда мы начинаем что-то вводить в инпут ошибка пропадает
+inputText.addEventListener('keyup', function(e) {
+	if ( inputText.value ) {
+		inputText.classList.remove('is-invalid');
+	}
+});
+
 generateList(tasks);
 
 
