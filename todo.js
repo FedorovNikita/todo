@@ -5,7 +5,8 @@ let tasks = [
 ];
 
 let ul = document.querySelector('.list-group');
-let deleteBtns = document.getElementsByClassName('delete-item');
+let form = document.forms['addTodoItem'];
+let inputText = form.elements['todoText'];
 // получает текст 
 // создает li, добавляет текст и создает class
 // возвращает li
@@ -47,7 +48,11 @@ function generateList(tasksArray) {
 // добавляет новый task
 function addList(list) {
 	tasks.unshift(list);
-	generateList(tasks);
+	//generateList(tasks);
+	// чтобы добавлять по одной и не генерировать по новой li
+	// insertAdjacentElement приниак5т два аргумента 1. это позиция, на которую нужно устаровить 2. элемент, который нужно установить
+	ul.insertAdjacentElement('afterbegin',listTemplate(list));
+
 }
 
 // навешиваем событие при каждом клике на корзину
@@ -76,12 +81,21 @@ ul.addEventListener('click', function(e) {
 	if ( e.target.classList.contains('delete-item')) {
 		deleteListItem(e.target);
 	}
+});
+
+form.addEventListener('submit', function(e) {
+	//прекращение стандартного действия (то что тут было сразу пропадало)
+	e.preventDefault();
+	//получать текст из инпута inputText.value
+	//и чтобы добавить можно просто вызывать функцию и передавать ей это текст
+	//addList(inputText.value); // но этот у нас генерирует все элементы заного
+	addList(inputText.value);
 })
 
 generateList(tasks);
 
 
-console.log(deleteBtns);
+
 
 
 /* // находим кнопку
