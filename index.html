@@ -16,8 +16,14 @@
 				<div class="card-body">
 					<form name="addTodoItem">
 						<div class="form-group">
+							<div class="alert alert-success invalid-feedback">
+								Task added success!
+							</div>	
 							<label for="todoText">Text</label>
 							<input type="text" class="form-control" id="todoText">
+							<div class="invalid-feedback">
+								Please, enter some text
+							</div>
 						</div>
 						<button type="submit" class="btn btn-primary">Add</button>
 					</form>
@@ -28,7 +34,11 @@
 					Task list
 				</div>
 				<div class="card-body">
+					<div class="alert alert-danger invalid-feedback">
+						Task has been removed success
+					</div>
 					<ul class="list-group">
+						
 						<!-- <li class="list-group-item">Cras justo odio</li> -->
 							
 					</ul>

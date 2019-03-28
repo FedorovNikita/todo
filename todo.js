@@ -7,6 +7,11 @@ let tasks = [
 let ul = document.querySelector('.list-group');
 let form = document.forms['addTodoItem'];
 let inputText = form.elements['todoText'];
+let messageAdd = document.getElementsByClassName('alert');
+let btnClear = document.getElementsByClassName('clear-btn');
+
+
+
 // получает текст 
 // создает li, добавляет текст и создает class
 // возвращает li
@@ -24,6 +29,8 @@ function listTemplate(task) {
 
 	// добавляем иконку в ли
 	li.appendChild(Idelete);
+	
+	
 	return li;
 }
 
@@ -35,7 +42,7 @@ function clearList() {
 // генерирует список тасков
 function generateList(tasksArray) {
 	clearList();
-
+	
 	for (let i = 0; i < tasks.length; i++) {
 		ul.appendChild(listTemplate(tasks[i]));
 	}
@@ -52,7 +59,9 @@ function addList(list) {
 	// чтобы добавлять по одной и не генерировать по новой li
 	// insertAdjacentElement приниак5т два аргумента 1. это позиция, на которую нужно устаровить 2. элемент, который нужно установить
 	ul.insertAdjacentElement('afterbegin',listTemplate(list));
-
+	if (tasks.length) {
+		messageAdd[2].classList.add('invalid-feedback');
+	}
 }
 
 // навешиваем событие при каждом клике на корзину
@@ -74,22 +83,66 @@ function deleteListItem(target) {
 	tasks.splice(index, 1);
 	// удаляем li из разметки
 	parent.remove();
+	messageAdd[1].classList.remove('invalid-feedback');
+	setTimeout(function() {
+		messageAdd[1].classList.add('invalid-feedback');
+	}, 2000)
+	if (tasks.length == 0) {
+		let mesAdd = document.createElement('div');
+		mesAdd.textContent = 'Empty list.';
+		mesAdd.className = 'alert alert-info';
+		ul.appendChild(mesAdd);
+	}
 }
 
 // удаляем элементы при событие
 ul.addEventListener('click', function(e) {
+	// delete list item
 	if ( e.target.classList.contains('delete-item')) {
 		deleteListItem(e.target);
 	}
 });
 
+btnClear[0].addEventListener('click', function(e) {
+	ul.textContent = '';
+	let mesAdd = document.createElement('div');
+	mesAdd.textContent = 'Empty list.';
+	mesAdd.className = 'alert alert-info';
+	ul.appendChild(mesAdd);
+
+})
+
 form.addEventListener('submit', function(e) {
 	//прекращение стандартного действия (то что тут было сразу пропадало)
 	e.preventDefault();
-	//получать текст из инпута inputText.value
-	//и чтобы добавить можно просто вызывать функцию и передавать ей это текст
-	//addList(inputText.value); // но этот у нас генерирует все элементы заного
-	addList(inputText.value);
+	// сделаем проверку, чтобы не добавлялось пустое значение
+	if (!inputText.value) {
+		// show error
+		inputText.classList.add('is-invalid');
+	} else {
+		// удаляем класс is-invalid, если он был, чтобы ниже не был текс please, enter...
+		inputText.classList.remove('is-invalid');
+		// удаляем класс, чтобы появлось сообщение после удачного добавление task
+		// не очень хорошее решение...
+		messageAdd[0].classList.remove('invalid-feedback');
+		//получать текст из инпута inputText.value
+		//и чтобы добавить можно просто вызывать функцию и передавать ей это текст
+		//addList(inputText.value); // но этот у нас генерирует все элементы заного
+		addList(inputText.value);
+		// сбрасываем красное поле с инпуда
+		form.reset();
+		setTimeout(function() {
+			messageAdd[0].classList.add('invalid-feedback');
+		}, 2000)
+	}
+
+	 
+})
+
+inputText.addEventListener('keyup', function (e) {
+	if (inputText.value) {
+		inputText.classList.remove('is-invalid');
+	}
 })
 
 generateList(tasks);
